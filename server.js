@@ -33,7 +33,11 @@ app.get("/api/timestamp/:date_string?", function (req, res) {
       unixDate = Date.UTC(dates[0], dates[1]-1, dates[2]);
       utcDate = new Date(Date.UTC(dates[0], dates[1]-1, dates[2])).toUTCString();
   }
-  res.json({unix: unixDate, utc: utcDate}); 
+  if (utcDate) {
+    res.json({unix: unixDate, utc: utcDate}); 
+  } else {
+     res.json({error: "Invalid Date"}); 
+  }
 });
 
 
