@@ -25,10 +25,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/timestamp/:date_string", function (req, res) {
-  var dateString = req.query.date_string;
   var unixDate = Date.now();
   var utcDate = new Date().toUTCString();
-  res.json({unix: unixDate, utc: dateString}); 
+  var dateString = req.params.date_string;
+  if (dateString) {
+      let dates = dateString.split("-");
+      utcDate = Date.UTC(dates[0], dates[1], dates[2]);
+  }
+  res.json({unix: unixDate, utc: utcDate}); 
 });
 
 
